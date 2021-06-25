@@ -79,6 +79,15 @@ resource "azurerm_availability_set" "main" {
   resource_group_name = azurerm_resource_group.main[count.index].name
 }
 
+data "azurerm_resource_group" "image" {
+  name = "packer-rg"
+}
+
+data "azurerm_image" "image" {
+  name                = "myPackerImage"
+  resource_group_name = data.azurerm_resource_group.image.name
+}
+
 resource "azurerm_linux_virtual_machine" "main" {
   name                            = "${var.prefix}-${count.index}-vm"
   resource_group_name             = azurerm_resource_group.main[count.index].name
