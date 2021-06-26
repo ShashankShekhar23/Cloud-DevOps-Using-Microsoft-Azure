@@ -102,11 +102,8 @@ resource "azurerm_linux_virtual_machine" "main" {
     azurerm_network_interface.main[count.index].id,
   ]
 
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
-    version   = "latest"
+ storage_profile_image_reference {
+    id=data.azurerm_image.image.id
   }
 
   os_disk {
